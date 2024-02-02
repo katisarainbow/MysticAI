@@ -60,6 +60,9 @@
     @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
 }
 
+.subhead_text {
+    @apply mt-5 text-3xl max-w-4xl font-extrabold leading-[1.15] text-black md:text-4xl lg:text-5xl;
+}
 .desc {
     @apply mt-5 text-lg text-gray-600 sm:text-xl max-w-2xl;
 }
