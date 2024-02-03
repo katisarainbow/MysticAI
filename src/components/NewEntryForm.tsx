@@ -37,11 +37,18 @@ const NewEntryForm = () => {
     const [step, setStep] = useState(0);
     const [selected, isSelected] = useState(false);
     const router = useRouter();
-    const { mutate: createFile } = trpc.createFile.useMutation();
+    const { mutate: createFile } = trpc.createFile.useMutation({
+        onSuccess: () => {
+            console.log("success");
+        },
+        onError: () => {
+            console.log("error");
+        },
+    });
 
     const onSubmit = (data: z.infer<typeof formSchema>) => {
+        createFile(data);
         console.log(data);
-        router.push("/reading");
     };
 
     const form = useForm<z.infer<typeof formSchema>>({

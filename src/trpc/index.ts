@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import OpenAI from "openai";
+import { OpenAIStream, StreamingTextResponse } from "ai";
 
 export const appRouter = router({
     authCallback: publicProcedure.query(async () => {
@@ -79,6 +80,8 @@ export const appRouter = router({
                     name: input.name,
                     color: input.color,
                     type: input.type,
+                    question: "",
+                    cards: [],
                     uploadStatus: "PROCESSING",
                     userId,
                 },
@@ -91,7 +94,7 @@ export const appRouter = router({
             z.object({
                 id: z.string(),
                 question: z.string(),
-                cards: z.array(z.string().min(1).max(10)),
+                cards: z.array(z.string()).min(1).max(10),
             })
         )
         .mutation(async ({ ctx, input }) => {
@@ -117,19 +120,22 @@ export const appRouter = router({
                     },
                 },
             });
-        }),
-    getTarotReading: privateProcedure
-        .input(
-            z.object({
-                question: z.string(),
-                type: z.string(),
-                cards: z.array(z.string().min(1).max(10)),
-            })
-        )
-        .query(async ({ input }) => {
-            const { question, cards, type } = input;
+
+            await db.message.create({
+                data: {
+                    text: input.question,
+                    isUserMessage: true,
+                    userId,
+                    fileId: input.id,
+                },
+            });
+
             const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-            const completion = await openai.chat.completions.create({
+
+            const response = await openai.chat.completions.create({
+                model: "gpt-3.5-turbo",
+                stream: true,
+                temperature: 0.7,
                 messages: [
                     {
                         role: "system",
@@ -138,14 +144,70 @@ export const appRouter = router({
                     },
                     {
                         role: "user",
-                        content: `The question is: ${question}, the spread is ${type}. From left to right the first card (past) is: ${cards[0]}, the second card (present) is: ${cards[1]}, and the third card (future) is: ${cards[2]}`,
+                        content: `The question is: ${input.question}, the spread is ${file.type}. From left to right the first card (past) is: ${input.cards[0]}, the second card (present) is: ${input.cards[1]}, and the third card (future) is: ${input.cards[2]}`,
                     },
                 ],
-                model: "gpt-3.5-turbo",
-                temperature: 0.7,
-                max_tokens: 60,
             });
-            return { completion };
+
+            let fullMessage = "";
+
+            for await (const chunk of response) {
+                const completion = chunk.choices[0].delta.content;
+
+                if (!completion) continue;
+                fullMessage += completion;
+            }
+
+            console.log("FULL RESPONSE", fullMessage);
+
+            await db.message.create({
+                data: {
+                    text: fullMessage,
+                    isUserMessage: false,
+                    fileId: input.id,
+                    userId,
+                },
+            });
+        }),
+    getFileMessages: privateProcedure
+        .input(
+            z.object({
+                limit: z.number().min(1).max(100),
+                fileId: z.string(),
+            })
+        )
+        .query(async ({ ctx, input }) => {
+            const { userId } = ctx;
+            const { fileId, limit } = input;
+
+            const file = await db.file.findFirst({
+                where: {
+                    id: fileId,
+                    userId,
+                },
+            });
+
+            if (!file) throw new TRPCError({ code: "NOT_FOUND" });
+
+            const messages = await db.message.findMany({
+                take: limit! + 1,
+                where: {
+                    fileId,
+                },
+                orderBy: {
+                    createdAt: "desc",
+                },
+                select: {
+                    id: true,
+                    isUserMessage: true,
+                    createdAt: true,
+                    text: true,
+                },
+            });
+
+            return {
+                messages,
+            };
         }),
 });
 

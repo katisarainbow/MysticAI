@@ -14,6 +14,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { buttonVariants } from "@/components/ui/button";
 
 const Dashboard = () => {
     const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<
@@ -65,14 +66,24 @@ const Dashboard = () => {
                                         <div className="h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-r  from-orange-600 to-amber-500 " />
 
                                         <div className="flex-1 truncate">
+                                            <div className="flex items-center space-x-3">
+                                                <h3 className="truncate text-lg font-medium text-zinc-900">
+                                                    {file.title}
+                                                </h3>
+                                            </div>
+
                                             <Link
-                                                href={`/dashboard/${file.id}`}
+                                                className={buttonVariants({
+                                                    size: "sm",
+                                                    variant: "ghost",
+                                                    className:
+                                                        "flex-2 mt-2 text-xs  bg-gray-100",
+                                                })}
+                                                href={`/reading/${file.id}`}
                                             >
-                                                <div className="flex items-center space-x-3">
-                                                    <h3 className="truncate text-lg font-medium text-zinc-900">
-                                                        {file.title}
-                                                    </h3>
-                                                </div>
+                                                {!file.question
+                                                    ? "Start reading"
+                                                    : "View lecture"}
                                             </Link>
                                         </div>
 

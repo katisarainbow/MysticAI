@@ -3,7 +3,6 @@ import tres from "@/lib/tres.png";
 import uno from "@/lib/uno.png";
 import Image from "next/image";
 import { Dialog, DialogFooter, DialogTrigger } from "../ui/dialog";
-import { DialogCardContent } from "./DialogCardContent";
 import { useForm } from "react-hook-form";
 import {
     Form,
@@ -18,6 +17,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import SelectCard from "./SelectCard";
+import { trpc } from "@/app/_trpc/client";
+import { Router } from "next/router";
+import { useState } from "react";
 
 const formSchema = z.object({
     question: z.string({ required_error: "Please enter a question." }),
@@ -27,9 +29,15 @@ const formSchema = z.object({
         .max(10),
 });
 
-console.log(bu)
+const DialogCardEntry = ({
+    fileid,
+    handleFormSubmit,
+}: {
+    fileid: string;
+    handleFormSubmit: () => void;
+}) => {
+    const [isLoading, setIsLoading] = useState(false);
 
-const DialogCardEntry = () => {
     const cards = {
         first: {
             title: "First Card",
@@ -54,8 +62,21 @@ const DialogCardEntry = () => {
         },
     };
 
+    const { mutate: updateFile } = trpc.updateFile.useMutation({
+        onSuccess: () => {
+            console.log("success");
+            handleFormSubmit();
+            setIsLoading(false);
+        },
+        onError: () => {
+            console.log("error");
+        },
+    });
+
     const onSubmit = (data: z.infer<typeof formSchema>) => {
-        console.log(data);
+        setIsLoading(true);
+        updateFile({ id: fileid, ...data });
+        console.log(data, { id: fileid });
     };
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -71,7 +92,7 @@ const DialogCardEntry = () => {
     return (
         <Form {...form}>
             <form
-                className="justify-center items-center py-12 px-6"
+                className="justify-center items-center py-12 "
                 onSubmit={form.handleSubmit(onSubmit)}
             >
                 <FormField
@@ -82,6 +103,7 @@ const DialogCardEntry = () => {
                             <FormLabel>Please enter your question</FormLabel>
                             <FormControl>
                                 <Input
+                                    disabled={isLoading}
                                     placeholder="What is your question?"
                                     {...field}
                                 />
@@ -90,12 +112,12 @@ const DialogCardEntry = () => {
                         </FormItem>
                     )}
                 />
-                <div className="grid grid-cols-3 gap-1 py-12 justify-center items-center">
+                <div className="grid grid-cols-3 py-12 justify-center items-center  bg-gradient-to-t from-orange-100/10 via-orange-200/90 to-orange-100/10 rounded-lg">
                     {cardsArray.map((card) => {
                         return (
                             <div
                                 key={card.alt}
-                                className="flex flex-col justify-center items-center"
+                                className="flex flex-col justify-center items-center  px-4 py-4"
                             >
                                 <Image
                                     src={card.src}
@@ -109,8 +131,12 @@ const DialogCardEntry = () => {
                         );
                     })}
                 </div>
-                <Button type="submit" className="mb-12 mt-12 w-1/4">
-                    Submit
+                <Button
+                    type="submit"
+                    className="mb-12 mt-12 w-1/4"
+                    disabled={isLoading}
+                >
+                    {isLoading ? "Please Wait" : "Submit"}
                 </Button>
             </form>
         </Form>
