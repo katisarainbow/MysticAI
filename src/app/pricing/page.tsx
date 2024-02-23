@@ -192,7 +192,7 @@ const Page = async () => {
                                                             )}
                                                         </div>
                                                         {footnote ? (
-                                                            <div className="flex items-center space-x-1">
+                                                            <div className="flex space-x-1">
                                                                 <p
                                                                     className={cn(
                                                                         "text-gray-600",
