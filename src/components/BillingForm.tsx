@@ -28,35 +28,43 @@ const BillingForm = ({ subscriptionPlan }: BillingFormProps) => {
             },
         });
     return (
-        <MaxWidthWrapper>
-            <Card>
-                <CardHeader>
-                    <CardDescription>
-                        You are currently on the{" "}
-                        <strong>{subscriptionPlan.name}</strong> plan
-                    </CardDescription>
-                </CardHeader>
-                <CardFooter>
-                    <Button type="submit">
-                        {isLoading ? <Loader2 /> : null}
-                        {subscriptionPlan.isSubscribed
-                            ? "Manage Subscription"
-                            : "Upgrade to PRO"}
-                    </Button>
-                    {subscriptionPlan.isSubscribed ? (
-                        <p>
-                            {subscriptionPlan.isCanceled
-                                ? "Your plan will be canceled on "
-                                : "Your plan renews on "}
-                            {format(
-                                subscriptionPlan.stripeCurrentPeriodEnd!,
-                                "dd.MM.yy"
-                            )}
-                            .
-                        </p>
-                    ) : null}
-                </CardFooter>
-            </Card>
+        <MaxWidthWrapper className="max-w-5xl">
+            <form
+                className="mt-12"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    createStripeSession();
+                }}
+            >
+                <Card>
+                    <CardHeader>
+                        <CardDescription>
+                            You are currently on the{" "}
+                            <strong>{subscriptionPlan.name}</strong> plan
+                        </CardDescription>
+                    </CardHeader>
+                    <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
+                        <Button type="submit">
+                            {isLoading ? <Loader2 /> : null}
+                            {subscriptionPlan.isSubscribed
+                                ? "Manage Subscription"
+                                : "Upgrade to PRO"}
+                        </Button>
+                        {subscriptionPlan.isSubscribed ? (
+                            <p>
+                                {subscriptionPlan.isCanceled
+                                    ? "Your plan will be canceled on "
+                                    : "Your plan renews on "}
+                                {format(
+                                    subscriptionPlan.stripeCurrentPeriodEnd!,
+                                    "dd.MM.yy"
+                                )}
+                                .
+                            </p>
+                        ) : null}
+                    </CardFooter>
+                </Card>
+            </form>
         </MaxWidthWrapper>
     );
 };
