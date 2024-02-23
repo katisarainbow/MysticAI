@@ -68,7 +68,7 @@ const NewEntryForm = () => {
                     <DialogTitle>New read</DialogTitle>
                     <DialogDescription>
                         Enter all the details of your reading here, and click
-                        'Next' when you're done.
+                        &apos;Next&apos; when you&apos;re done.
                     </DialogDescription>
                 </DialogHeader>
             )}
