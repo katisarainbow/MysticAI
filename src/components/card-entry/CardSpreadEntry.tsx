@@ -29,7 +29,7 @@ const CardSpreadEntry = ({ file }: { file: File }) => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center text-center">
+        <div className="flex flex-col items-center justify-center text-center mt-20">
             {!isFormSubmitted ? (
                 <>
                     <MaxWidthWrapper className="mb-12 mt-20 sm:mt-20 flex flex-col items-center justify-center text-center">
@@ -60,12 +60,15 @@ const CardSpreadEntry = ({ file }: { file: File }) => {
                 </>
             ) : (
                 <>
-                    <MaxWidthWrapper className="mb-12 mt-20 sm:mt-20 flex flex-col items-center justify-center text-center">
+                    <MaxWidthWrapper className="my-20 flex flex-col items-center justify-center text-center">
+                        <h1 className="text-3xl font-bold">
+                            Your Tarot Reading
+                        </h1>
                         <h3 className="subhead_text text-center">
                             <span className="orange_gradient">{file.type}</span>{" "}
                             spread
                         </h3>
-                        <p className="desc text-center mt-12">
+                        <p className="desc text-center mt-12 text-zinc-600">
                             {file.question}
                         </p>
                         <div className="flex flex-row space-x-4 items-center justify-center text-center mt-6 ">

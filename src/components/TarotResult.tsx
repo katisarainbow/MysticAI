@@ -22,9 +22,8 @@ const TarotResult = ({ file }: { file: File }) => {
 
     console.log(data);
     return (
-        <div className="flex flex-col items-center justify-center text-center ">
-            <h1 className="text-3xl font-bold">Your Tarot Reading</h1>
-            <p className="text-lg font-light w-1/3 m-12">
+        <div className="flex flex-col items-center justify-center text-center bg-orange-500/70 p-4 px-24 mb-12 text-background font-semibold">
+            <p className="text-lg font-light m-12  p-4 rounded-lg">
                 {data?.messages
                     .filter((message) => message.isUserMessage === false)
                     .map((message) => message.text)}

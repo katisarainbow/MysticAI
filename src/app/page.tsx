@@ -5,39 +5,43 @@ import { buttonVariants } from "@/components/ui/button";
 
 export default function Home() {
     return (
-        <>
-            <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
-                <h1 className="head_text text-center">
-                    Learn Tarot
-                    <br className="max-md:hidden" />
-                    <span className="orange_gradient text-center">
-                        AI-Powered
-                    </span>
-                </h1>
-                <p className="desc text-center">
-                    MysticAI stands as a revolutionary open-source AI tool,
-                    dedicated to enhancing the Tarot learning journey by
-                    providing an accessible and engaging platform for
-                    enthusiasts to delve into the mystical realm of Tarot cards.
-                </p>
-                <Link
-                    className={buttonVariants({
-                        size: "lg",
-                        className: "mt-5",
-                    })}
-                    href="/dashboard"
-                    target="_blank"
-                >
-                    Get started <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-            </MaxWidthWrapper>
-
+        <div className="flex flex-col inset-x-0 top-0 items-center justify-between">
+            <div className="flex flex-col image_test w-full bg-center h-screen items-center justify-center">
+                <div className="bg-black bg-opacity-20 w-full h-screen flex items-center justify-center">
+                    <MaxWidthWrapper className="flex flex-col items-center justify-center">
+                        <h1 className="head_text text-center text-background">
+                            Learn Tarot
+                            <br className="max-md:hidden" />
+                            <span className="orange_gradient text-center">
+                                AI-Powered
+                            </span>
+                        </h1>
+                        <p className="desc text-center text-background">
+                            MysticAI stands as a revolutionary open-source AI
+                            tool, dedicated to enhancing the Tarot learning
+                            journey by providing an accessible and engaging
+                            platform for enthusiasts to delve into the mystical
+                            realm of Tarot cards.
+                        </p>
+                        <Link
+                            className={buttonVariants({
+                                size: "lg",
+                                className: "mt-12",
+                            })}
+                            href="/dashboard"
+                            target="_blank"
+                        >
+                            Get started <ArrowRight className="ml-2 h-5 w-5" />
+                        </Link>
+                    </MaxWidthWrapper>
+                </div>
+            </div>
             {/*value section */}
             <div>
                 <div className="relative isolate">
                     <div
                         aria-hidden="true"
-                        className="pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+                        className="pointer-events-none absolute inset-x-0 -top-100 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-100"
                     >
                         <div
                             style={{
@@ -127,6 +131,6 @@ export default function Home() {
                     </li>
                 </ol>
             </div>
-        </>
+        </div>
     );
 }

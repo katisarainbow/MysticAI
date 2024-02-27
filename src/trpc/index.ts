@@ -147,7 +147,7 @@ export const appRouter = router({
                     },
                     {
                         role: "user",
-                        content: `The question is: ${input.question}, the spread is ${file.type}. From left to right the first card (past) is: ${input.cards[0]}, the second card (present) is: ${input.cards[1]}, and the third card (future) is: ${input.cards[2]}`,
+                        content: `The question is: ${input.question}, the spread is ${file.type}. From left to right the first card is: ${input.cards[0]}, the second card (present) is: ${input.cards[1]}, and the third card (future) is: ${input.cards[2]}`,
                     },
                 ],
             });
