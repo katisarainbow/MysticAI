@@ -16,7 +16,7 @@ import { Input } from "../ui/input";
 type Card = {
     title: string;
     description: string;
-    src: StaticImageData;
+    src: string;
     alt: string;
     value: string;
 };

@@ -28,7 +28,7 @@ import template from "@/lib/template.png";
 
 const spreads = [
     {
-        name: "One card",
+        name: "One Card",
         number: "1",
         description: "Beginner",
         resume: "This spread is a simple one card spread. It is a great spread for beginners and can be used for a variety of simple questions.",
@@ -37,7 +37,7 @@ const spreads = [
         plan: "Free",
     },
     {
-        name: "Three cards",
+        name: "Three Cards",
         number: "3",
         description: "Beginner",
         resume: "This spread is a simple three card spread. It is a great spread for beginners and can be used for a variety of questions. Past-Present-Future, Situation-Obstacle-Advice, Mind-Body-Spirit",
@@ -73,7 +73,7 @@ const spreads = [
         plan: "Pro",
     },
     {
-        name: "The Zodiac Spread",
+        name: "Zodiac",
         number: "12",
         description: "Advanced",
         resume: "The tarot reader shuffles the deck first and then the querent. The reader places the top card face up on the left-hand side, in the 9 o'clock position. The following 11 are dealt face-up in a counter-clockwise direction, with each card corresponding to one of the positions on the face of a clock.",
@@ -84,8 +84,8 @@ const spreads = [
 ];
 
 const formSchema = z.object({
-    title: z.string().min(1, "Too short!").max(10, "Too long!"),
-    name: z.string().min(1, "Too short!").max(10, "Too long!"),
+    title: z.string().min(1, "Too short!").max(20, "Too long!"),
+    name: z.string().min(1, "Too short!").max(20, "Too long!"),
     color: z.string({ required_error: "Please select a color." }),
     type: z.string({ required_error: "Please select a type." }),
 });
@@ -109,8 +109,8 @@ const NewEntryForm = () => {
     });
 
     const onSubmit = (data: z.infer<typeof formSchema>) => {
-        createFile(data);
-        console.log(data);
+        const file = createFile(data);
+        console.log(file);
     };
 
     const form = useForm<z.infer<typeof formSchema>>({

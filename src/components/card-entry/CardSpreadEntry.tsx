@@ -54,7 +54,7 @@ const CardSpreadEntry = ({ file }: { file: File }) => {
                         </p>
                     </MaxWidthWrapper>
                     <DialogCardEntry
-                        fileid={file.id}
+                        file={file}
                         handleFormSubmit={handleFormSubmit}
                     />
                 </>
