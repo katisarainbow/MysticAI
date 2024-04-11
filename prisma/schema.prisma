@@ -9,14 +9,52 @@ datasource db {
 }
 
 model User {
-  id                     String    @id @unique
-  email                  String    @unique
+  id                     String        @id @unique
+  email                  String        @unique
+  stripeCustomerId       String?       @unique @map("stripe_customer_id")
+  stripeSubscriptionId   String?       @unique @map("stripe_subscription_id")
+  stripePriceId          String?       @map("stripe_price_id")
+  stripeCurrentPeriodEnd DateTime?     @map("stripe_current_period_end")
   File                   File[]
   Message                Message[]
-  stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
-  stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
-  stripePriceId          String?   @map(name: "stripe_price_id")
-  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
+  CardMeaning            CardMeaning[]
+}
+
+model File {
+  id           String       @id @default(cuid())
+  title        String       @unique
+  question     String?
+  name         String
+  color        String
+  type         String
+  createdAt    DateTime     @default(now())
+  cards        String[]
+  uploadStatus UploadStatus @default(PENDING)
+  userId       String?
+  messages     Message[]
+  User         User?        @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id            String   @id @default(cuid())
+  text          String
+  isUserMessage Boolean
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  userId        String?
+  fileId        String?
+  User          User?    @relation(fields: [userId], references: [id])
+  File          File?    @relation(fields: [fileId], references: [id])
+}
+
+model CardMeaning {
+  id              String  @id @default(cuid())
+  meaning         String
+  reversedMeaning String
+  slug            String
+  name            String
+  userId          String?
+  User            User?   @relation(fields: [userId], references: [id])
 }
 
 enum UploadStatus {
@@ -25,38 +63,3 @@ enum UploadStatus {
   FAILED
   SUCCESS
 }
-
-model File {
-  id        String   @id @default(cuid())
-  title     String   @unique
-  question  String?
-  name      String
-  color     String
-  type      String
-  createdAt DateTime @default(now())
-  cards     String[]
-
-  messages Message[]
-
-  uploadStatus UploadStatus @default(PENDING)
-
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
-}
-
-model Message {
-  id        String   @id @default(cuid())
-  text      String   @db.Text()
-
-  isUserMessage Boolean
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String?
-
-  File   File?   @relation(fields: [fileId], references: [id])
-  fileId String?
-}
-

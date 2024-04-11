@@ -59,6 +59,12 @@
     background-size: cover;
 }
 
+.image_test2 {
+    background-image: url(/images/image-test.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
 .head_text {
     @apply mt-6 text-5xl max-w-4xl font-extrabold leading-[1.15] md:text-6xl lg:text-7xl;
 }

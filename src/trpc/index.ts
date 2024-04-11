@@ -110,6 +110,21 @@ export const appRouter = router({
                 },
             });
 
+            const cardMeanings = await db.cardMeaning.findMany({
+                where: {
+                    userId: userId,
+                    name: {
+                        in: input.cards,
+                    },
+                },
+            });
+
+            const cardMeaningsFormatted = cardMeanings
+                .map((cardMeaning) => {
+                    return `The ${cardMeaning.name} card means ${cardMeaning.meaning} and the reversed meaning is ${cardMeaning.reversedMeaning}. `;
+                })
+                .join("");
+
             if (!file) throw new TRPCError({ code: "NOT_FOUND" });
 
             const updatedFile = await db.file.update({
@@ -144,8 +159,11 @@ export const appRouter = router({
                 messages: [
                     {
                         role: "system",
-                        content:
-                            "You are a Tarot teacher. You must interpret and explain the meaning of each card according to the question asked and the position in which each card is drawn. Avoid delving into scientific explanations, as this is for entertainment purposes. The specific meanings refer to the Rider-Waite Tarot cards.",
+                        content: `You are a Tarot teacher. Your task is to interpret the cards based on the meanings provided. ${
+                            cardMeaningsFormatted
+                                ? `${cardMeaningsFormatted} (If a cards meaning is available in the database, use that interpretation. For cards without a custom meaning in the database, or if a card is not found, default to the meanings of the Rider-Waite Tarot cards. This approach ensures a personalized reading while maintaining a connection to traditional interpretations)`
+                                : "Take into account the meanings of the Rider-Waite Tarot cards."
+                        }`,
                     },
                     {
                         role: "user",
@@ -259,6 +277,37 @@ export const appRouter = router({
         });
 
         return { url: stripeSession.url };
+    }),
+    createMeaning: privateProcedure
+        .input(
+            z.object({
+                meaning: z.string(),
+                reversedMeaning: z.string(),
+                slug: z.string(),
+                name: z.string(),
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const { userId } = ctx;
+            const cardMeaning = await db.cardMeaning.create({
+                data: {
+                    meaning: input.meaning,
+                    reversedMeaning: input.reversedMeaning,
+                    slug: input.slug,
+                    name: input.name,
+                    userId,
+                },
+            });
+
+            return cardMeaning;
+        }),
+    getUserMeanings: privateProcedure.query(async ({ ctx }) => {
+        const { userId, user } = ctx;
+        return await db.cardMeaning.findMany({
+            where: {
+                userId,
+            },
+        });
     }),
 });
 

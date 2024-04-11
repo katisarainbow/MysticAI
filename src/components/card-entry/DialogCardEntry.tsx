@@ -176,14 +176,14 @@ const DialogCardEntry = ({
     return (
         <Form {...form}>
             <form
-                className="justify-center items-center py-12 "
+                className="flex flex-col justify-center items-center py-12 w-full max-w-4xl"
                 onSubmit={form.handleSubmit(onSubmit)}
             >
                 <FormField
                     control={form.control}
                     name="question"
                     render={({ field }) => (
-                        <FormItem className="px-32">
+                        <FormItem className="w-full px-32">
                             <FormLabel>Please enter your question</FormLabel>
                             <FormControl>
                                 <Input
@@ -196,7 +196,13 @@ const DialogCardEntry = ({
                         </FormItem>
                     )}
                 />
-                <div className="grid grid-cols-3 gap-10 py-12 justify-center items-center rounded-lg">
+                <div
+                    className={`w-full ${
+                        file.type === "One Card"
+                            ? "flex items-center justify-center "
+                            : "grid"
+                    } place-items-center gap-4 py-12 rounded-lg md:grid-cols-2 lg:grid-cols-3`}
+                >
                     {cardsArray
                         .slice(
                             0,
@@ -204,7 +210,7 @@ const DialogCardEntry = ({
                                 ? 1
                                 : file.type === "Three Cards"
                                 ? 3
-                                : file.type === "Cross Formation"
+                                : file.type === "Five-Card"
                                 ? 5
                                 : file.type === "HorseShoe"
                                 ? 7
@@ -212,28 +218,26 @@ const DialogCardEntry = ({
                                 ? 10
                                 : cardsArray.length
                         )
-                        .map((card) => {
-                            return (
-                                <div
-                                    key={card.alt}
-                                    className="flex flex-col w-60 justify-center items-center"
-                                >
-                                    <div className=" flex bg-neutral-200 border border-neutral-300 rounded-lg items-center justify-center  mb-6 p-2 hover:scale-110 transform transition duration-300">
-                                        <img
-                                            src={card.src}
-                                            alt={card.alt}
-                                            className="w-full h-full  ease-in-out rounded-lg"
-                                        />
-                                    </div>
-
-                                    <SelectCard {...{ card, form }} />
+                        .map((card) => (
+                            <div
+                                key={card.alt}
+                                className="flex flex-col w-60 items-center justify-center mt-12"
+                            >
+                                <div className="flex bg-neutral-200 border border-neutral-300 rounded-lg items-center justify-center mb-6 p-2 hover:scale-110 transform transition duration-300">
+                                    <img
+                                        src={card.src}
+                                        alt={card.alt}
+                                        className="w-full h-full ease-in-out rounded-lg"
+                                    />
                                 </div>
-                            );
-                        })}
+
+                                <SelectCard {...{ card, form }} />
+                            </div>
+                        ))}
                 </div>
                 <Button
                     type="submit"
-                    className="mb-12 mt-12 w-1/4"
+                    className="mb-12 mt-12 w-1/4 self-center"
                     disabled={isLoading}
                 >
                     {isLoading ? "Please Wait" : "Submit"}

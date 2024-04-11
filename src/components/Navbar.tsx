@@ -8,6 +8,7 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ArrowRight } from "lucide-react";
 import UserAccountNav from "./UserAccountNav";
+import MobileNav from "./MobileNav";
 
 const Navbar = async () => {
     const { getUser } = getKindeServerSession();
@@ -17,16 +18,29 @@ const Navbar = async () => {
         <nav className="fixed h-14 inset-x-0 top-0 z-30 w-full border-b border-gray-500/10 bg-background/50 backdrop-blur-lg transition-all">
             <MaxWidthWrapper>
                 <div className="flex h-14 items-center justify-between">
-                    <Link
-                        href="/"
-                        className="flex z-40 font-semibold text-yellow-500 uppercase"
-                    >
-                        <span>MysticAI</span>
+                    <Link href="/" className="flex z-40  ">
+                        <div className="flex gap-2 items-center justify-center">
+                            <img src="/images/logo.png" className="h-14 w-14" />
+                            <span className="font-semibold  items-center justify-center">
+                                MysticAI
+                            </span>
+                        </div>
                     </Link>
+
+                    <MobileNav isAuth={!!user} />
 
                     <div className="hidden items-center space-x-4 sm:flex">
                         {!user ? (
                             <>
+                                <Link
+                                    className={buttonVariants({
+                                        variant: "ghost",
+                                        size: "sm",
+                                    })}
+                                    href="/cards"
+                                >
+                                    Cards
+                                </Link>
                                 <Link
                                     className={buttonVariants({
                                         variant: "ghost",
@@ -57,13 +71,22 @@ const Navbar = async () => {
                         ) : (
                             <>
                                 <Link
-                                    href="dashboard"
+                                    href="/dashboard"
                                     className={buttonVariants({
                                         variant: "ghost",
                                         size: "sm",
                                     })}
                                 >
                                     Dashboard
+                                </Link>
+                                <Link
+                                    className={buttonVariants({
+                                        variant: "ghost",
+                                        size: "sm",
+                                    })}
+                                    href="/cards"
+                                >
+                                    Cards
                                 </Link>
                                 <UserAccountNav
                                     name={

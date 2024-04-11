@@ -1,5 +1,6 @@
 "use client";
 import { trpc } from "@/app/_trpc/client";
+import { Badge } from "./ui/badge";
 
 type File = {
     id: string;
@@ -20,10 +21,18 @@ const TarotResult = ({ file }: { file: File }) => {
         fileId: file.id,
     });
 
-    console.log(data);
     return (
-        <div className="flex flex-col items-center justify-center text-center bg-orange-500/70 p-4 px-24 mb-12 text-background font-semibold">
-            <p className="text-lg font-light m-12  p-4 rounded-lg">
+        <div className="flex flex-col items-center justify-center text-center  p-4 py-12 px-24 mb-12  font-semibold">
+            <p className="desc text-center mt-12 text-5xl font-bold">
+                {file.question}
+            </p>
+            <div className="flex flex-row gap-4 mt-4">
+                {file.cards.map((card) => (
+                    <Badge>{card}</Badge>
+                ))}
+            </div>
+
+            <p className="text-lg font-light mx-12 mt-12 rounded-lg">
                 {data?.messages
                     .filter((message) => message.isUserMessage === false)
                     .map((message) => message.text)}

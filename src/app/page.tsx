@@ -2,6 +2,7 @@ import Link from "next/link";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
+import PageTransition from "@/components/framer-motion/PageTransition";
 
 export default function Home() {
     return (
@@ -65,72 +66,75 @@ export default function Home() {
             </div>
 
             {/* Feature section */}
-            <div className="mx-auto mb-32 mt-32 max-w-5xl sm:mt-56">
-                <div className="mb-12 px-6 lg:px-8">
-                    <div className="mx-auto max-w-2xl sm:text-center">
-                        <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
-                            Start learning in minutes
-                        </h2>
-                        <p className="mt-4 text-lg text-gray-600">
-                            Learning tarot has never been easier than with
-                            MysticAI.
-                        </p>
+            <MaxWidthWrapper>
+                <div className="mx-auto py-32 max-w-5xl ">
+                    <div className="mb-12 px-6 lg:px-8">
+                        <div className="mx-auto max-w-2xl sm:text-center">
+                            <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
+                                Start learning in minutes
+                            </h2>
+                            <p className="mt-4 text-lg text-gray-600">
+                                Learning tarot has never been easier than with
+                                MysticAI.
+                            </p>
+                        </div>
                     </div>
-                </div>
 
-                {/* steps */}
-                <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0">
-                    <li className="md:flex-1">
-                        <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-                            <span className="text-sm font-medium text-orange-600">
-                                Step 1
-                            </span>
-                            <span className="text-xl font-semibold">
-                                Sign up for an account
-                            </span>
-                            <span className="mt-2 text-zinc-700">
-                                Either starting out with a free plan or choose
-                                our{" "}
-                                <Link
-                                    href="/pricing"
-                                    className=" text-orange-600 underline underline-offset-2"
-                                >
-                                    pro plan
-                                </Link>
-                                .
-                            </span>
-                        </div>
-                    </li>
-                    <li className="md:flex-1">
-                        <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-                            <span className="text-sm font-medium text-orange-600">
-                                Step 2
-                            </span>
-                            <span className="text-xl font-semibold">
-                                Tell us your card spread
-                            </span>
-                            <span className="mt-2 text-zinc-700">
-                                With our intuitive interface, it will be very
-                                easy for you to explain your card spread to us.
-                            </span>
-                        </div>
-                    </li>
-                    <li className="md:flex-1">
-                        <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
-                            <span className="text-sm font-medium text-orange-600">
-                                Step 3
-                            </span>
-                            <span className="text-xl font-semibold">
-                                We help you interpret the possible meanings
-                            </span>
-                            <span className="mt-2 text-zinc-700">
-                                It&apos;s that simple. Try out MysticAI today -
-                                it really takes less than a minute.
-                            </span>
-                        </div>
-                    </li>
-                </ol>
-            </div>
+                    {/* steps */}
+                    <ol className="my-8 space-y-4 pt-8 md:flex md:space-x-12 md:space-y-0">
+                        <li className="md:flex-1">
+                            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+                                <span className="text-sm font-medium text-orange-600">
+                                    Step 1
+                                </span>
+                                <span className="text-xl font-semibold">
+                                    Sign up for an account
+                                </span>
+                                <span className="mt-2 text-zinc-700">
+                                    Either starting out with a free plan or
+                                    choose our{" "}
+                                    <Link
+                                        href="/pricing"
+                                        className=" text-orange-600 underline underline-offset-2"
+                                    >
+                                        pro plan
+                                    </Link>
+                                    .
+                                </span>
+                            </div>
+                        </li>
+                        <li className="md:flex-1">
+                            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+                                <span className="text-sm font-medium text-orange-600">
+                                    Step 2
+                                </span>
+                                <span className="text-xl font-semibold">
+                                    Tell us your card spread
+                                </span>
+                                <span className="mt-2 text-zinc-700">
+                                    With our intuitive interface, it will be
+                                    very easy for you to explain your card
+                                    spread to us.
+                                </span>
+                            </div>
+                        </li>
+                        <li className="md:flex-1">
+                            <div className="flex flex-col space-y-2 border-l-4 border-zinc-300 py-2 pl-4 md:border-l-0 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
+                                <span className="text-sm font-medium text-orange-600">
+                                    Step 3
+                                </span>
+                                <span className="text-xl font-semibold">
+                                    We help you interpret the possible meanings
+                                </span>
+                                <span className="mt-2 text-zinc-700">
+                                    It&apos;s that simple. Try out MysticAI
+                                    today - it really takes less than a minute.
+                                </span>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </MaxWidthWrapper>
         </div>
     );
 }

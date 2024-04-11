@@ -55,9 +55,8 @@ const SelectCard = ({ card, form }: { card: Card; form: any }) => {
                                 <FormControl className="w-1/2">
                                     <PopoverTrigger asChild>
                                         <Button
-                                            variant="outline"
                                             role="combobox"
-                                            className="w-full justify-between"
+                                            className="w-full justify-center items-center text-center bg-orange-500 rounded-full"
                                         >
                                             {field.value
                                                 ? tarotCards.find(
@@ -69,7 +68,7 @@ const SelectCard = ({ card, form }: { card: Card; form: any }) => {
                                         </Button>
                                     </PopoverTrigger>
                                 </FormControl>
-                                <PopoverContent className="w-[200px] p-0">
+                                <PopoverContent className="w-[200px] ">
                                     <Command>
                                         <Input
                                             placeholder="Search card..."

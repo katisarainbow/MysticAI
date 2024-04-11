@@ -13,75 +13,27 @@ import {
 
 import { trpc } from "@/app/_trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Image from "next/image";
 import { useState } from "react";
 import * as z from "zod";
 import SpreadTypeCard from "./SpreadTypeCard";
-import { Card } from "./ui/card";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
-import { HoverCard, HoverCardTrigger } from "./ui/hover-card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { Input } from "./ui/input";
 import { Select, SelectTrigger, SelectValue } from "./ui/select";
 
+import { tarotSpreads } from "@/config/spread";
+import { CheckIcon, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import template from "@/lib/template.png";
+import { useToast } from "./ui/use-toast";
 
-const spreads = [
-    {
-        name: "One Card",
-        number: "1",
-        description: "Beginner",
-        resume: "This spread is a simple one card spread. It is a great spread for beginners and can be used for a variety of simple questions.",
-        image: template,
-        slug: "one-card",
-        plan: "Free",
-    },
-    {
-        name: "Three Cards",
-        number: "3",
-        description: "Beginner",
-        resume: "This spread is a simple three card spread. It is a great spread for beginners and can be used for a variety of questions. Past-Present-Future, Situation-Obstacle-Advice, Mind-Body-Spirit",
-        image: template,
-        slug: "three-cards",
-        plan: "Free",
-    },
-    {
-        name: "Cross Formation",
-        number: "5",
-        description: "Intermediate",
-        resume: "A five-card Tarot spread is also used to explore a theme and variations. The theme card is placed in the center of the other four cards, which form a rectangle around it. It&apos;s usually pulled last. Present, Influences, Challenges, Final Outcome, Theme",
-        image: template,
-        slug: "cross-formation",
-        plan: "Pro",
-    },
-    {
-        name: "HorseShoe",
-        number: "7",
-        description: "Intermediate-Advance",
-        resume: "This reading is great for decision-making, especially when the querent feels unsure how to proceed. Pulling for this reading, you create a V-shape with seven cards. Traditionally, the V opens downward, but you can also flip the shape if you prefer that formation.",
-        image: template,
-        slug: "horseshoe",
-        plan: "Pro",
-    },
-    {
-        name: "Celtic Cross",
-        number: "10",
-        description: "Advanced",
-        resume: "The Celtic Cross is a detailed 10 card layout that answers a time sensitive question. It can be used for general readings, showing the general direction of the seekers life, where they are now and where they are headed.",
-        image: template,
-        slug: "celtic-cross",
-        plan: "Pro",
-    },
-    {
-        name: "Zodiac",
-        number: "12",
-        description: "Advanced",
-        resume: "The tarot reader shuffles the deck first and then the querent. The reader places the top card face up on the left-hand side, in the 9 o'clock position. The following 11 are dealt face-up in a counter-clockwise direction, with each card corresponding to one of the positions on the face of a clock.",
-        image: template,
-        slug: "the-zodiac-spread",
-        plan: "Pro",
-    },
-];
+type TarotSpread = {
+    name: string;
+    description: string;
+    image: string;
+    cardMeaning: string[];
+    slug: string;
+    plan: string;
+};
 
 const formSchema = z.object({
     title: z.string().min(1, "Too short!").max(20, "Too long!"),
@@ -90,26 +42,55 @@ const formSchema = z.object({
     type: z.string({ required_error: "Please select a type." }),
 });
 
-const NewEntryForm = () => {
+const NewEntryForm = ({
+    isSubscribed,
+    handleClose,
+}: {
+    isSubscribed: boolean;
+    handleClose: () => void;
+}) => {
     const [step, setStep] = useState(0);
-    const [isSelected, setIsSelected] = useState("");
+    
+    const { toast } = useToast();
     const router = useRouter();
 
-    const handleSelect = (slug: string) => {
-        setIsSelected(slug);
+    const handleSelect = (name: string) => {
+        
+        form.setValue("type", name);
     };
 
     const { mutate: createFile } = trpc.createFile.useMutation({
         onSuccess: () => {
             console.log("success");
+            toast({
+                action: (
+                    <div className="w-full flex items-center">
+                        <CheckIcon className="mr-4 text-green-600" />
+                        <span className="first-letter:capitalize">
+                            successfully created
+                        </span>
+                    </div>
+                ),
+            });
         },
         onError: () => {
             console.log("error");
+            toast({
+                action: (
+                    <div className="w-full flex items-center">
+                        <X className="mr-4 text-red-600" />
+                        <span className="first-letter:capitalize">
+                            Uh oh! Something went wrong. Try again.
+                        </span>
+                    </div>
+                ),
+            });
         },
     });
 
     const onSubmit = (data: z.infer<typeof formSchema>) => {
         const file = createFile(data);
+        handleClose();
         console.log(file);
     };
 
@@ -204,32 +185,15 @@ const NewEntryForm = () => {
                         </>
                     )}
                     {step === 1 && (
-                        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-                            {spreads.map((spread) => (
-                                <div key={spread.name}>
-                                    <HoverCard>
-                                        <HoverCardTrigger>
-                                            <div
-                                                className={`flex w-full border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-lg ${
-                                                    isSelected ===
-                                                        spread.slug &&
-                                                    "border-orange-400 border-2 rounded-lg hover:border-orange-400"
-                                                }`}
-                                                onClick={() => {
-                                                    form.setValue(
-                                                        "type",
-                                                        spread.name
-                                                    );
-                                                }}
-                                            >
+                        <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 ">
+                            {tarotSpreads.map((spread: TarotSpread) => (
+                                
                                                 <SpreadTypeCard
+                                                    isSubscribed={isSubscribed}
                                                     spread={spread}
                                                     handleSelect={handleSelect}
                                                 />
-                                            </div>
-                                        </HoverCardTrigger>
-                                    </HoverCard>
-                                </div>
+                                        
                             ))}
                         </div>
                     )}

@@ -28,7 +28,7 @@ const Page = async ({ params }: PageProps) => {
 
     return (
         <div>
-            <CardSpreadEntry file={file}/>
+            <CardSpreadEntry file={file} />
         </div>
     );
 };

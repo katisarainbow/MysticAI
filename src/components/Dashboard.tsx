@@ -2,6 +2,7 @@
 import { trpc } from "@/app/_trpc/client";
 import UploadButton from "./UploadButton";
 import {
+    CheckIcon,
     Ghost,
     Loader2,
     Plus,
@@ -15,19 +16,36 @@ import { format } from "date-fns";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { buttonVariants } from "@/components/ui/button";
+import { getUserSubscriptionPlan } from "@/lib/stripe";
+import { useToast } from "./ui/use-toast";
 
-const Dashboard = () => {
+interface PageProps {
+    subscriptionPlan: Awaited<ReturnType<typeof getUserSubscriptionPlan>>;
+}
+
+const Dashboard = ({ subscriptionPlan }: PageProps) => {
     const [currentlyDeletingFile, setCurrentlyDeletingFile] = useState<
         string | null
     >(null);
 
     const utils = trpc.useContext();
+    const { toast } = useToast();
 
     const { data: files, isLoading } = trpc.getUserFiles.useQuery();
 
     const { mutate: deleteFile } = trpc.deleteFile.useMutation({
         onSuccess: () => {
             utils.getUserFiles.invalidate();
+            toast({
+                action: (
+                    <div className="w-full flex items-center">
+                        <CheckIcon className="mr-4 text-green-600" />
+                        <span className="first-letter:capitalize">
+                            successfully deleted
+                        </span>
+                    </div>
+                ),
+            });
         },
         onMutate: ({ id }) => {
             setCurrentlyDeletingFile(id);
@@ -38,12 +56,12 @@ const Dashboard = () => {
     });
 
     return (
-        <main className="mx-auto max-w-7xl md:p-10 mt-20">
+        <main className="mx-auto max-w-7xl min-h-[100vh] md:p-10 mt-20">
             <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
-                <h1 className="mb-3 font-bold text-5xl text-gray-900">
+                <h1 className="mb-3 font-bold text-7xl text-gray-900">
                     My Tarot Reads
                 </h1>
-                <UploadButton />
+                <UploadButton isSubscribed={subscriptionPlan.isSubscribed} />
             </div>
 
             {/* display all user files */}
@@ -59,11 +77,41 @@ const Dashboard = () => {
                         .map((file) => (
                             <li
                                 key={file.id}
-                                className="col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg"
+                                className={`col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg  ${
+                                    file.color === "orange"
+                                        ? "hover:shadow-orange-500/30"
+                                        : file.color === "blue"
+                                        ? "hover:shadow-blue-500/30"
+                                        : file.color === "green"
+                                        ? "hover:shadow-green-500/30"
+                                        : file.color === "red"
+                                        ? "hover:shadow-red-500/30"
+                                        : file.color === "purple"
+                                        ? "hover:shadow-purple-500/30"
+                                        : file.color === "yellow"
+                                        ? "hover:shadow-yellow-500/30"
+                                        : ""
+                                }`}
                             >
                                 <div className="flex flex-col gap-2">
                                     <div className="pt-6 px-6 flex w-full items-center justify-between space-x-6">
-                                        <div className="h-10 w-10 flex-shrink-0 rounded-full bg-gradient-to-r  from-orange-600 to-amber-500 " />
+                                        <div
+                                            className={`h-10 w-10 flex-shrink-0 rounded-full ${
+                                                file.color === "orange"
+                                                    ? "bg-gradient-to-r from-orange-600 to-amber-500"
+                                                    : file.color === "blue"
+                                                    ? "bg-gradient-to-r from-blue-600 to-sky-500"
+                                                    : file.color === "green"
+                                                    ? "bg-gradient-to-r from-green-600 to-lime-500"
+                                                    : file.color === "red"
+                                                    ? "bg-gradient-to-r from-red-600 to-red-400"
+                                                    : file.color === "purple"
+                                                    ? "bg-gradient-to-r from-violet-500 to-purple-400"
+                                                    : file.color === "yellow"
+                                                    ? "bg-gradient-to-r from-amber-500 to-yellow-400"
+                                                    : ""
+                                            }`}
+                                        />
 
                                         <div className="flex-1 truncate">
                                             <div className="flex items-center space-x-3">
@@ -77,7 +125,7 @@ const Dashboard = () => {
                                                     size: "sm",
                                                     variant: "ghost",
                                                     className:
-                                                        "flex-2 mt-2 text-xs  bg-gray-100",
+                                                        "flex-2 mt-2 text-xs bg-gray-200 hover:bg-gray-100",
                                                 })}
                                                 href={`/reading/${file.id}`}
                                             >
@@ -92,7 +140,7 @@ const Dashboard = () => {
                                                 deleteFile({ id: file.id })
                                             }
                                             size="sm"
-                                            className=" text-zinc-500"
+                                            className="text-zinc-500"
                                             variant="ghost"
                                         >
                                             {currentlyDeletingFile ===

@@ -5,8 +5,12 @@ import Form from "./NewEntryForm";
 import { Button } from "./ui/button";
 import { Dialog, DialogTrigger } from "./ui/dialog";
 
-const UploadButton = () => {
+const UploadButton = ({ isSubscribed }: { isSubscribed: boolean }) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    const handleClose = () => {
+        setIsOpen(false);
+    };
 
     return (
         <Dialog
@@ -20,7 +24,7 @@ const UploadButton = () => {
             <DialogTrigger onClick={() => setIsOpen(true)} asChild>
                 <Button>Add new</Button>
             </DialogTrigger>
-            <Form />
+            <Form isSubscribed={isSubscribed} handleClose={handleClose} />
         </Dialog>
     );
 };
