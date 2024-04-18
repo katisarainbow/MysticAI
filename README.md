@@ -68,3 +68,13 @@ MysticAI es desarrollada por Katherin Tesara (https://github.com/katisarainbow).
 
 ---
 
+![1](https://github.com/katisarainbow/MysticAI/assets/94558563/726ff499-88b4-4997-9afc-4ea200964133)
+![2](https://github.com/katisarainbow/MysticAI/assets/94558563/56f842eb-99d3-408d-bbcc-88831846958d)
+![3](https://github.com/katisarainbow/MysticAI/assets/94558563/8d739a71-c3ac-42f6-9dbe-b7fd3d175f05)
+![4](https://github.com/katisarainbow/MysticAI/assets/94558563/b6e4a262-0caf-467b-9fba-7afba69f5bb7)
+![5](https://github.com/katisarainbow/MysticAI/assets/94558563/cbbe909e-bf40-4524-acc9-fa6acb7568d3)
+
+
+
+
+
