@@ -14,11 +14,22 @@ import { Check, HelpCircle, Minus } from "lucide-react";
 
 import Link from "next/link";
 
+interface FeatureItem {
+    text: string;
+    footnote?: string;
+    negative?: boolean;
+}
+
 const Page = async () => {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    const pricingItems = [
+    const pricingItems: {
+        plan: string;
+        tagline: string;
+        quota: number;
+        features: FeatureItem[];
+    }[] = [
         {
             plan: "Free",
             quota: PLANS.find((p) => p.slug === "free")!.quota,
