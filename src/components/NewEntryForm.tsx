@@ -207,10 +207,10 @@ const NewEntryForm = ({
                                         </HoverCardTrigger>
                                         <HoverCardContent className="w-80">
                                             <h1 className="text-lg font-bold mb-2">
-                                                Card's Position Meaning
+                                                Card&apos;s Position Meaning
                                             </h1>
                                             {spread.cardMeaning.map((card) => (
-                                                <p>{card}</p>
+                                                <p key={card}>{card}</p>
                                             ))}
                                         </HoverCardContent>
                                     </HoverCard>

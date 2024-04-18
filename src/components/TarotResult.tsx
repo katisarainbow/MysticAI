@@ -28,7 +28,7 @@ const TarotResult = ({ file }: { file: File }) => {
             </p>
             <div className="flex flex-row gap-4 mt-4">
                 {file.cards.map((card) => (
-                    <Badge>{card}</Badge>
+                    <Badge key={card}>{card}</Badge>
                 ))}
             </div>
 
