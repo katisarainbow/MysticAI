@@ -8,7 +8,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { cn, constructMetadata } from "@/lib/utils";
 import { Toaster } from "@/components/ui/toaster";
-import PageTransition from "@/components/framer-motion/PageTransition";
 
 const inter = Inter({ subsets: ["latin"] });
 const sacramento = Sacramento({ weight: ["400"], subsets: ["latin"] });
