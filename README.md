@@ -1,5 +1,5 @@
 
-# English
+English
 
 # MysticAI
 
@@ -33,7 +33,7 @@ If you'd like to contribute to MysticAI, we're open to collaborations! Feel free
 MysticAI is developed by Katherin Tesara (https://github.com/katisarainbow).
 
 
-# Español
+Español
 
 # MysticAI
 
