@@ -56,7 +56,8 @@ const SelectCard = ({ card, form }: { card: Card; form: any }) => {
                                     <PopoverTrigger asChild>
                                         <Button
                                             role="combobox"
-                                            className="w-full justify-center items-center text-center bg-orange-500 rounded-full"
+                                            variant="linkForeground"
+                                            className="w-full justify-center items-center text-center "
                                         >
                                             {field.value
                                                 ? tarotCards.find(

@@ -58,7 +58,7 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
     return (
         <main className="mx-auto max-w-7xl min-h-[100vh] md:p-10 mt-20">
             <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-5 sm:flex-row sm:items-center sm:gap-0">
-                <h1 className="mb-3 font-bold text-7xl text-gray-900">
+                <h1 className="mb-3 font-bold text-5xl text-gray-900">
                     My Tarot Reads
                 </h1>
                 <UploadButton isSubscribed={subscriptionPlan.isSubscribed} />
@@ -77,7 +77,7 @@ const Dashboard = ({ subscriptionPlan }: PageProps) => {
                         .map((file) => (
                             <li
                                 key={file.id}
-                                className={`col-span-1 divide-y divide-gray-200 rounded-lg bg-white shadow transition hover:shadow-lg  ${
+                                className={`col-span-1 divide-y divide-gray-200 rounded-lg bg-background/50 backdrop-blur-lg shadow transition hover:shadow-lg  ${
                                     file.color === "orange"
                                         ? "hover:shadow-orange-500/30"
                                         : file.color === "blue"

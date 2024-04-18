@@ -50,12 +50,13 @@ const NewEntryForm = ({
     handleClose: () => void;
 }) => {
     const [step, setStep] = useState(0);
-    
+
     const { toast } = useToast();
     const router = useRouter();
+    const [isSelected, setIsSelected] = useState("");
 
-    const handleSelect = (name: string) => {
-        
+    const handleSelect = (name: string, slug: string) => {
+        setIsSelected(slug);
         form.setValue("type", name);
     };
 
@@ -187,13 +188,33 @@ const NewEntryForm = ({
                     {step === 1 && (
                         <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4 ">
                             {tarotSpreads.map((spread: TarotSpread) => (
-                                
+                                <div key={spread.name}>
+                                    <HoverCard>
+                                        <HoverCardTrigger>
+                                            <div
+                                                className={`flex w-full border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-lg ${
+                                                    isSelected ===
+                                                        spread.slug &&
+                                                    "border-orange-400 border-2 rounded-lg hover:border-orange-400"
+                                                }`}
+                                            >
                                                 <SpreadTypeCard
                                                     isSubscribed={isSubscribed}
                                                     spread={spread}
                                                     handleSelect={handleSelect}
                                                 />
-                                        
+                                            </div>
+                                        </HoverCardTrigger>
+                                        <HoverCardContent className="w-80">
+                                            <h1 className="text-lg font-bold mb-2">
+                                                Card's Position Meaning
+                                            </h1>
+                                            {spread.cardMeaning.map((card) => (
+                                                <p>{card}</p>
+                                            ))}
+                                        </HoverCardContent>
+                                    </HoverCard>
+                                </div>
                             ))}
                         </div>
                     )}

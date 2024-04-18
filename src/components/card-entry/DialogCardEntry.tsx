@@ -174,76 +174,82 @@ const DialogCardEntry = ({
     const cardsArray = Object.values(cards);
 
     return (
-        <Form {...form}>
-            <form
-                className="flex flex-col justify-center items-center py-12 w-full max-w-4xl"
-                onSubmit={form.handleSubmit(onSubmit)}
-            >
-                <FormField
-                    control={form.control}
-                    name="question"
-                    render={({ field }) => (
-                        <FormItem className="w-full px-32">
-                            <FormLabel>Please enter your question</FormLabel>
-                            <FormControl>
-                                <Input
-                                    disabled={isLoading}
-                                    placeholder="What is your question?"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <div
-                    className={`w-full ${
-                        file.type === "One Card"
-                            ? "flex items-center justify-center "
-                            : "grid"
-                    } place-items-center gap-4 py-12 rounded-lg md:grid-cols-2 lg:grid-cols-3`}
+        <div className="flex justify-center bg-gradient-to-t from-orange-100/10 via-amber-600/40 to-orange-100/5 w-full mb-12">
+            <Form {...form}>
+                <form
+                    className="flex flex-col justify-center items-center w-full max-w-4xl"
+                    onSubmit={form.handleSubmit(onSubmit)}
                 >
-                    {cardsArray
-                        .slice(
-                            0,
+                    <div
+                        className={`w-full ${
                             file.type === "One Card"
-                                ? 1
-                                : file.type === "Three Cards"
-                                ? 3
-                                : file.type === "Five-Card"
-                                ? 5
-                                : file.type === "HorseShoe"
-                                ? 7
-                                : file.type === "Celtic Cross"
-                                ? 10
-                                : cardsArray.length
-                        )
-                        .map((card) => (
-                            <div
-                                key={card.alt}
-                                className="flex flex-col w-60 items-center justify-center mt-12"
-                            >
-                                <div className="flex bg-neutral-200 border border-neutral-300 rounded-lg items-center justify-center mb-6 p-2 hover:scale-110 transform transition duration-300">
-                                    <img
-                                        src={card.src}
-                                        alt={card.alt}
-                                        className="w-full h-full ease-in-out rounded-lg"
-                                    />
-                                </div>
+                                ? "flex items-center justify-center"
+                                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center"
+                        } py-6 rounded-lg `}
+                    >
+                        {cardsArray
+                            .slice(
+                                0,
+                                file.type === "One Card"
+                                    ? 1
+                                    : file.type === "Three Cards"
+                                    ? 3
+                                    : file.type === "Five-Card"
+                                    ? 5
+                                    : file.type === "HorseShoe"
+                                    ? 7
+                                    : file.type === "Celtic Cross"
+                                    ? 10
+                                    : cardsArray.length
+                            )
+                            .map((card) => (
+                                <div
+                                    key={card.alt}
+                                    className="flex flex-col w-60 items-center justify-center bg-neutral-200 border border-neutral-300 rounded-lg shadow-md"
+                                >
+                                    <div className="flex rounded-lg items-center justify-center p-2">
+                                        <img
+                                            src={card.src}
+                                            alt={card.alt}
+                                            className="w-full h-full ease-in-out rounded-lg"
+                                        />
+                                    </div>
 
-                                <SelectCard {...{ card, form }} />
-                            </div>
-                        ))}
-                </div>
-                <Button
-                    type="submit"
-                    className="mb-12 mt-12 w-1/4 self-center"
-                    disabled={isLoading}
-                >
-                    {isLoading ? "Please Wait" : "Submit"}
-                </Button>
-            </form>
-        </Form>
+                                    <SelectCard {...{ card, form }} />
+                                </div>
+                            ))}
+                    </div>
+                    <FormField
+                        control={form.control}
+                        name="question"
+                        render={({ field }) => (
+                            <FormItem className="w-full px-24 py-12 mt-6 bg-background/50 backdrop-blur-lg rounded-lg shadow-lg">
+                                <FormLabel className="text-center text-2xl mb-4 font-semibold">
+                                    Please enter your question
+                                </FormLabel>
+                                <FormControl className="flex justify-center">
+                                    <Input
+                                        disabled={isLoading}
+                                        placeholder="What is your question?"
+                                        {...field}
+                                        className="text-center border-neutral-300 focus:border-amber-500 focus:ring-amber-500"
+                                    />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <Button
+                        type="submit"
+                        className="mb-12 mt-12 w-1/4 self-center text-white font-bold py-2 px-4 rounded-full shadow-lg"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? "Please Wait" : "Submit"}
+                    </Button>
+                </form>
+            </Form>
+        </div>
     );
 };
 

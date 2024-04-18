@@ -58,7 +58,7 @@ const CardSpreadEntry = ({ file }: { file: File }) => {
                 </>
             ) : (
                 <>
-                    <MaxWidthWrapper className="my-24 flex flex-col items-center justify-center text-center">
+                    <MaxWidthWrapper className="mt-24 flex flex-col items-center justify-center text-center">
                         <h1 className="text-7xl font-bold mt-12">
                             Your Tarot Reading
                         </h1>
@@ -67,7 +67,7 @@ const CardSpreadEntry = ({ file }: { file: File }) => {
                             spread
                         </h3>
                     </MaxWidthWrapper>
-                    <div className="justify-center text-center bg-gradient-to-t from-orange-100/10 via-orange-500/30 to-orange-100/10 px-12">
+                    <div className="mt-4 justify-center text-center bg-gradient-to-t from-orange-100/10 via-orange-500/30 to-orange-100/10 px-12">
                         <div className="grid grid-cols-3 gap-4 sm:grid-cols-1 md:grid-cols-3 items-center justify-center text-center">
                             {file.cards.map((card) => (
                                 <img

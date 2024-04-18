@@ -37,15 +37,6 @@ const Navbar = async () => {
                                         variant: "ghost",
                                         size: "sm",
                                     })}
-                                    href="/cards"
-                                >
-                                    Cards
-                                </Link>
-                                <Link
-                                    className={buttonVariants({
-                                        variant: "ghost",
-                                        size: "sm",
-                                    })}
                                     href="/pricing"
                                 >
                                     Pricing

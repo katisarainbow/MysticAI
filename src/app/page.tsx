@@ -2,7 +2,6 @@ import Link from "next/link";
 import MaxWidthWrapper from "../components/MaxWidthWrapper";
 import { ArrowRight } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import PageTransition from "@/components/framer-motion/PageTransition";
 
 export default function Home() {
     return (
@@ -51,14 +50,26 @@ export default function Home() {
                             }}
                             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr  from-orange-600 to-amber-500 opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
                         ></div>
-
-                        <div>
-                            <div className="mx-auto max-w-6xl px-6 lg:px-8">
-                                <div className="mt-16 flow-root sm:mt-24">
-                                    <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                                        {/* image from the project */}
-                                    </div>
-                                </div>
+                    </div>
+                </div>
+            </div>
+            <div className="flex flex-col justify-center">
+                <div>
+                    <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                        <div className="mt-16 flow-root sm:mt-24">
+                            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                                {/* image from the project */}
+                                <img src="/images/app/1.png" alt="tarot_card" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                        <div className="mt-16 flow-root sm:mt-24">
+                            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                                {/* image from the project */}
+                                <img src="/images/app/2.png" alt="tarot_card" />
                             </div>
                         </div>
                     </div>
@@ -67,7 +78,7 @@ export default function Home() {
 
             {/* Feature section */}
             <MaxWidthWrapper>
-                <div className="mx-auto py-32 max-w-5xl ">
+                <div className="mx-auto py-24 max-w-5xl ">
                     <div className="mb-12 px-6 lg:px-8">
                         <div className="mx-auto max-w-2xl sm:text-center">
                             <h2 className="mt-2 font-bold text-4xl text-gray-900 sm:text-5xl">
@@ -135,6 +146,38 @@ export default function Home() {
                     </ol>
                 </div>
             </MaxWidthWrapper>
+            <div className="flex flex-col justify-center mb-12">
+                <div>
+                    <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                        <div className="mt-16 flow-root sm:mt-24">
+                            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                                {/* image from the project */}
+                                <img src="/images/app/6.png" alt="tarot_card" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                        <div className="mt-16 flow-root sm:mt-24">
+                            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                                {/* image from the project */}
+                                <img src="/images/app/4.png" alt="tarot_card" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div className="mx-auto max-w-6xl px-6 lg:px-8">
+                        <div className="mt-16 flow-root sm:mt-24">
+                            <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
+                                {/* image from the project */}
+                                <img src="/images/app/5.png" alt="tarot_card" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
