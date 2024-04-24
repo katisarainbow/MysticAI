@@ -21,7 +21,7 @@ MysticAI is a web application for tarot card reading that utilizes ChatGPT artif
 
 ## Usage
 
-To use MysticAI, simply visit [mysticai.vercel.app](https://mysticai.vercel.app) in your web browser. The application is free, and you can start exploring card interpretations right away. If you want to access advanced features, consider subscribing to the Pro version.
+To use MysticAI, simply visit (https://mystic-ai-red.vercel.app) in your web browser. The application is free, and you can start exploring card interpretations right away. If you want to access advanced features, consider subscribing to the Pro version.
 
 ## Contribution
 
@@ -54,7 +54,7 @@ MysticAI es una aplicación web de lectura de cartas de tarot que utiliza la int
 
 ## Uso
 
-Para utilizar MysticAI, simplemente visita [mysticai.vercel.app](https://mysticai.vercel.app) en tu navegador web. La aplicación es gratuita y puedes empezar a explorar las interpretaciones de las cartas de inmediato. Si deseas acceder a funciones avanzadas, considera suscribirte a la versión Pro.
+Para utilizar MysticAI, simplemente visita (https://mystic-ai-red.vercel.app) en tu navegador web. La aplicación es gratuita y puedes empezar a explorar las interpretaciones de las cartas de inmediato. Si deseas acceder a funciones avanzadas, considera suscribirte a la versión Pro.
 
 ## Contribución
 
